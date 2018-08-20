@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Upload Interviewee CSV file</h2>
+
+@if (!ViewBag.Success)
+{
+    <form action="/csv/upload" method="post" enctype="multipart/form-data">
+        <label for="fileUpload">
+            Select CSV File: <input type="file" name="fileUpload" />
+        </label>
+        <button type="submit" class="btn btn-primary">Upload File</button>
+    </form>
+
+    <p>
+        <a href="https://drive.google.com/file/d/145VfTZ32gQb5FFwsKiHYwVkX6DZ42T7j/view?usp=sharing" target="_blank">Download Interview Name List.csv</a>
+    </p>
+
+}
+else
+{
+    <p>Successfully uploaded csv file.</p>
+
+}
+
+@section Scripts
+{
+    <script>
+        $('form').submit(function () {
+            var btn = $(this).find("button[type='submit']");
+            btn.prop('disabled', true);
+            btn.text("Uploading...");
+        });
+    </script>
+}
