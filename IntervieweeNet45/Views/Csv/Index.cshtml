@@ -1,15 +1,21 @@
 ﻿
 @{
+    /**/
+
     ViewBag.Title = "Index";
 }
 
-<h2>Upload Interviewee CSV file</h2>
-
+<h2>
+    <a href="https://github.com/aspdotnetgabs" target="_blank">
+        https://github.com/aspdotnetgabs
+    </a>
+</h2>
+<hr />
 @if (!ViewBag.Success)
 {
-    <form action="/csv/upload" method="post" enctype="multipart/form-data">
+    <form action="/csv/upload" method="post" enctype="multipart/form-data" id="interviewee">
         <label for="fileUpload">
-            Select CSV File: <input type="file" name="fileUpload" />
+            Select Interviewee CSV File: <input type="file" name="fileUpload" />
         </label>
         <button type="submit" class="btn btn-primary">Upload File</button>
     </form>
@@ -17,11 +23,42 @@
     <p>
         <a href="https://drive.google.com/file/d/145VfTZ32gQb5FFwsKiHYwVkX6DZ42T7j/view?usp=sharing" target="_blank">Download Interview Name List.csv</a>
     </p>
+    <hr />
+    <form action="/csv/uploadprov" method="post" enctype="multipart/form-data" id="provinceForm">
+        <label for="fileUpload">
+            Select Province CSV File: <input type="file" name="fileUpload" />
+        </label>
+        <button type="submit" class="btn btn-primary">Upload File</button>
+    </form>
+
+
+    <form action="/csv/uploadcity" method="post" enctype="multipart/form-data" id="citymunForm">
+        <label for="fileUpload">
+            Select City/Municipality CSV File: <input type="file" name="fileUpload" />
+        </label>
+        <button type="submit" class="btn btn-primary">Upload File</button>
+    </form>
+
+
+    <form action="/csv/uploadbrgy" method="post" enctype="multipart/form-data" id="barangayForm">
+        <label for="fileUpload">
+            Select Barangay CSV File: <input type="file" name="fileUpload" />
+        </label>
+        <button type="submit" class="btn btn-primary">Upload File</button>
+    </form>
+
+    <p>
+        <a href="https://drive.google.com/file/d/1GzGSeCTohCTQDh927x_au1QhPjhhP_FP/view?usp=sharing" target="_blank">Download PhilippineAddresses CSV Files</a>
+    </p>
 
 }
 else
 {
     <p>Successfully uploaded csv file.</p>
+    <p>
+        <a href="/csv" class="btn btn-info" >Back</a>
+    </p>
+
 
 }
 

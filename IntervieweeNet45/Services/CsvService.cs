@@ -16,19 +16,27 @@ namespace IntervieweeNet45.Services
     {
         private ISimpleLogger _log = new SimpleLogger();
 
-        public void BulkImportJob()
+        public void BulkImportJob(int entity, string delimiter)
         {
             using (var db = new IntervieweeDbContext())
             {
-                EFBatchOperation.For(db, db.Interviewees).InsertAll(ImportCsv<Interviewee>(typeof(Interviewee).Name + ".csv", true));
+                if(entity == 1)
+                    EFBatchOperation.For(db, db.Interviewees).InsertAll(ImportCsv<Interviewee>(typeof(Interviewee).Name + ".csv", delimiter, true));
+                else if (entity == 2)
+                    EFBatchOperation.For(db, db.Provinces).InsertAll(ImportCsv<Province>(typeof(Province).Name + ".csv", delimiter, true));
+                else if (entity == 3)
+                    EFBatchOperation.For(db, db.CityMuns).InsertAll(ImportCsv<CityMun>(typeof(CityMun).Name + ".csv", delimiter, true));
+                else if (entity == 4)
+                    EFBatchOperation.For(db, db.Barangays).InsertAll(ImportCsv<Barangay>(typeof(Barangay).Name + ".csv", delimiter, true));
+
             }
         }
 
-        private IList<T> ImportCsv<T>(string fileName, bool clearTable)
+        private IList<T> ImportCsv<T>(string fileName, string delimiter, bool clearTable)
         {
-            if(clearTable)
+            var tableName = typeof(T).GetTypeInfo().GetCustomAttribute<TableAttribute>().Name;
+            if (clearTable)
             {
-                var tableName = typeof(T).GetTypeInfo().GetCustomAttribute<TableAttribute>().Name;
                 using (var db = new IntervieweeDbContext())
                 {
                     db.Database.ExecuteSqlCommand("DELETE FROM [" + tableName + "]");
@@ -42,10 +50,11 @@ namespace IntervieweeNet45.Services
                 CsvTypeParser.InitLogger(_log);
                 string CsvType = typeof(T).Name;
 
+                _log.LogInformation($"[BULK IMPORTING...] \n=====| Type: {CsvType}, Filename: {fileName}, Tablename: {tableName} |=====");
                 using (TextReader reader = System.IO.File.OpenText(filePath))
                 {
                     var csv = new CsvReader(reader);
-                    csv.Configuration.Delimiter = ","; // Set the delimeter
+                    csv.Configuration.Delimiter = delimiter; // Set the delimeter
 
                     csv.Configuration.RegisterClassMap<CsvMapper<T>>();
                     csv.Configuration.HeaderValidated = null;

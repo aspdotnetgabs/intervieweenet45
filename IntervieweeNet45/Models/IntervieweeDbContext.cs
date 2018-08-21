@@ -14,6 +14,8 @@ namespace IntervieweeNet45.Models
         }
 
         public DbSet<Interviewee> Interviewees { get; set; }
-
+        public DbSet<Province> Provinces { get; set; }
+        public DbSet<CityMun> CityMuns { get; set; }
+        public DbSet<Barangay> Barangays { get; set; }
     }
 }
