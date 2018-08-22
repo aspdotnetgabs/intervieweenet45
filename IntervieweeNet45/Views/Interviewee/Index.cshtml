@@ -1,0 +1,102 @@
+﻿@model IEnumerable<IntervieweeNet45.Models.Interviewee>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Interviewee @DateTime.Now.ToString("hh:mm:ss")</h2>
+
+<form id="searchForm">
+    <input type="text" name="keyword" placeholder="Search" />
+    <button type="submit">Submit</button>
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Occupation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GivenName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MiddleInitial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BloodType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailAddress)
+            </th>
+        </tr>
+
+    </thead>
+    <tbody id="tBody">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Occupation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Company)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GivenName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MiddleInitial)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BloodType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailAddress)
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+
+@section scripts
+{
+    <script>
+        $("#searchForm").submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: "/interviewee/search",
+                type: "POST",
+                data: $("#searchForm").serialize(),
+                success: function (response) {
+                    $("#tBody").html(response);
+                }
+            })
+        });
+    </script>
+}
