@@ -10,7 +10,7 @@ namespace IntervieweeNet45.Controllers
     {
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "Interviewee");
+            return RedirectToAction("Index", "Shipping");
         }
 
         public ActionResult About()

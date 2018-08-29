@@ -1,0 +1,8 @@
+﻿@model List<IntervieweeNet45.Models.Province>
+
+
+@foreach (var p in Model)
+{
+    <option></option>
+    <option value="@p.provCode">@p.provDesc</option>
+}

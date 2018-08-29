@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div>
+    Province
+    <select id="province" name="province" class="form-control">
+        <option></option>
+    </select>
+    <br />
+    City/Municiplity
+    <select id="citymun" name="citymun" class="form-control">
+        <option></option>
+    </select>
+    <br />
+    Barangay
+    <select id="barangay" name="barangay" class="form-control">
+        <option></option>
+    </select>
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "/shipping/_LoadProvince",
+                success: function (response) {
+                    $("#province").html(response);
+                }
+            }); 
+        });
+
+        $('#province').on('change', function () {
+            $.ajax({
+                type: "GET",
+                url: "/shipping/_LoadCityMun",
+                data: { provCode: $('#province').val() },
+                success: function (response) {
+                    $("#citymun").html(response);
+                }
+            }); 
+        });
+    </script>
+}

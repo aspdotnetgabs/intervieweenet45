@@ -1,0 +1,6 @@
+﻿@model List<IntervieweeNet45.Models.CityMun>
+
+@foreach(var cm in Model)
+{
+    <option value="@cm.citymunCode">@cm.citymunDesc</option>
+}
